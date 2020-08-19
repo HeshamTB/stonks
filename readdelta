@@ -1,0 +1,6 @@
+#!/bin/bash
+
+#read days change from raw info
+# 19 Aug 2020 - H.B.
+
+cat raw/$1 | head -n-10 | tail -n+5

@@ -1,0 +1,9 @@
+#!/bin/bash
+
+#cli interface to track TASI profolio
+# 19 Aug 2020 - H.B
+
+version=0.1-alpha
+version_msg="stonks version $version"
+echo "$version_msg"
+

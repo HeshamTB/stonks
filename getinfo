@@ -1,0 +1,10 @@
+#!/bin/bash
+
+# 19 Aug 2020 - H.B
+#read arg and get info from mubasher
+raw=$(curl -s "https://english.mubasher.info/markets/TDWL/stocks/$1" | \
+	html2text2 | \
+	sed -n '/Last update:/,$p' | \
+	sed -n '/Stock Statistics/q;p')
+mkdir -p raw
+echo "$raw" > "raw/$1"
