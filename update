@@ -1,0 +1,27 @@
+#!/bin/bash
+
+#Copyright (C) 2020 - Hesham Banafa
+# 20 Aug 2020 - H.B.
+
+#go throgh all stocks in data dir and update "current" json value.
+
+if [ -d data ]
+then
+
+	stock_files=$(ls data)
+	for file in $stock_files
+	do
+	code=$(echo $file | sed 's/.json//g')
+	./getinfo $code && echo "updated $code"
+	current=$(./readprice $code)
+	if [ -z current ]
+	then
+		current="null"
+	fi
+	new_json=$(jq ".current = $current" data/$file)
+	echo $new_json | jq . > data/$file
+	done
+else
+	echo "No current holdings"
+	exit 1
+fi
