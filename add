@@ -1,0 +1,18 @@
+#!/bin/bash
+
+# Copyright (C) 2020 - Hesham Banafa
+# 20 Aug 2020 - H.B.
+
+#Add a stock to protfolio
+if (($# != 5)); then
+	echo "Usage: add <code> \"<name>\" <cost> <quantity> <current>"
+	exit 1
+fi
+mkdir -p data
+json=$(echo "{\"code\": $1, \"name\": \"$2\", \"cost\": $3, \"quantity\": $4, \"current\": $5}" | jq .)
+if [ -n "$json" ]; then
+	echo $json | jq . > data/$1.json
+else
+	exit 1
+fi
+exit 0
