@@ -19,9 +19,22 @@
 #    along with stonks.  If not, see <https://www.gnu.org/licenses/>.
 
 #read arg and get info from mubasher
+
+#check requirments
+html2text=html2text
+if ! command -v html2text &> /dev/null
+then
+	if ! command -v html2text2 $> /dev/null
+	then
+	echo "Can't find html2text"
+	exit 1
+	else
+	html2text=html2text2
+	fi
+fi
 raw=$(curl -s "https://english.mubasher.info/markets/TDWL/stocks/$1" | \
-	html2text2 | \
+	$html2text | \
 	sed -n '/Last update:/,$p' | \
-	sed -n '/Stock Statistics/q;p')
+	sed -n '/Stock Statistics/q;p') && echo "scrapped $1"
 mkdir -p raw
 echo "$raw" > "raw/$1"
